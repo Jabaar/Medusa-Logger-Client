@@ -7,6 +7,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+/**
+ * Builder.java
+ * @author Jabaar
+ *
+ */
 
 public class Builder {
 	public static File curDir = new File(System.getProperty("user.dir"), "config.dat");
