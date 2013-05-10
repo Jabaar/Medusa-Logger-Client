@@ -23,7 +23,9 @@ public class Builder {
 		try {			
 			if(!curDir.exists()) {
 				curDir.createNewFile();
-			}			
+			}else {
+				
+			}
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
