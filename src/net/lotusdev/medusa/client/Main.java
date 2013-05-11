@@ -140,6 +140,15 @@ public class Main extends JFrame {
 		JComboBox comboBox = new JComboBox();
 		comboBox.setModel(new DefaultComboBoxModel(new String[] {"smtp.gmail.com"}));
 		comboBox.setEditable(true);
+		
+		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				Builder.setEmailUser(textField.getText());
+				Builder.setEmailPass(textField_1.getText());
+			}
+		});
+		btnSave.setIcon(new ImageIcon(Main.class.getResource("/net/lotusdev/medusa/client/res/accept.png")));
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -163,7 +172,8 @@ public class Main extends JFrame {
 							.addGap(18)
 							.addComponent(lblTimeoutminutes, GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)
 							.addPreferredGap(ComponentPlacement.UNRELATED)
-							.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
+						.addComponent(btnSave, Alignment.TRAILING))
 					.addContainerGap())
 		);
 		gl_panel.setVerticalGroup(
@@ -186,7 +196,10 @@ public class Main extends JFrame {
 						.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(lblSmtpPort)
 						.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(lblTimeoutminutes)))
+						.addComponent(lblTimeoutminutes))
+					.addPreferredGap(ComponentPlacement.RELATED, 66, Short.MAX_VALUE)
+					.addComponent(btnSave)
+					.addContainerGap())
 		);
 		panel.setLayout(gl_panel);
 		
