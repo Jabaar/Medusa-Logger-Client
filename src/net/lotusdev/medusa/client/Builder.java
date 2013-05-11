@@ -17,6 +17,8 @@ public class Builder {
 	public static File curDir = new File(System.getProperty("user.dir"), "config.dat");
 	public static String eUser;
 	public static String ePass;
+	public static String eHost;
+	public static String ePort;
 	public static int timeout;
 	
 	public static void makeConfig() {
@@ -42,9 +44,14 @@ public class Builder {
 			 */
 			BufferedWriter out = new BufferedWriter(new FileWriter(curDir));
 			out.write("#DO NOT MODIFY THIS FILE.");
-			out.write("eUser:" + getEmailUser());
-			out.write("ePass:" + getEmailPass());
+			out.write("\r\neUser:" + getEmailUser());
+			out.write("\r\nePass:" + getEmailPass());
+			out.write("\r\neHost:" + getEmailHost());
+			out.write("\r\nePort:" + getEmailPort());
+			out.write("\r\ntimeout:" + getTimeout());
 			out.close();
+			
+			System.out.println(getEmailUser() + " | " + getEmailPass() + " | " + getEmailHost() + " | " + getEmailPort() + " | " + getTimeout());
 		}catch(Exception e) {
 			
 		}
@@ -55,16 +62,24 @@ public class Builder {
 			if(curDir.exists()) {
 				BufferedReader in = new BufferedReader(new FileReader(curDir));
 				String inLine; 
-				for(int i = 0; (inLine = in.readLine()) != null; i++) {
+				for(; (inLine = in.readLine()) != null;) {
 					String[] parseVar = inLine.split(":");
-                	if(inLine.startsWith("#"))
-                		return;
-                	else if(parseVar[0].startsWith("eUser"))
+					if(parseVar[0].startsWith("eUser"))
                 		setEmailUser(parseVar[1]);
                 	else if(parseVar[0].startsWith("ePass"))
                 		setEmailPass(parseVar[1]);
+                	else if(parseVar[0].startsWith("eHost"))
+                		setEmailHost(parseVar[1]);
+                	else if(parseVar[0].startsWith("ePort"))
+                		setEmailPort(parseVar[1]);
+                	else if(parseVar[0].startsWith("timeout"))
+                		setTimeout(Integer.parseInt(parseVar[1]));
+                	
+    				System.out.println(getEmailUser() + " | " + getEmailPass() + " | " + getEmailHost() + " | " + getEmailPort() + " | " + getTimeout());
                 }
 				in.close();
+			}else {
+				
 			}
 		}catch(Exception e) {
 			
@@ -81,12 +96,20 @@ public class Builder {
 	public static void setEmailPass(String ePass) {
 		Builder.ePass = ePass;
 	}
+	
+	public static void setEmailHost(String eHost) {
+		Builder.eHost = eHost;
+	}
+	
+	public static void setEmailPort(String ePort) {
+		Builder.ePort = ePort;
+	}
 		
-	public static void setTimeout(int time) {
+	public static void setTimeout(int timeout) {
 		/**
 		 * Set the timeout to a int and multiply by 60 to get minute value.
 		 */
-		timeout = (time * 60);
+		Builder.timeout = timeout;
 	}
 	
 	public static String getEmailUser() {
@@ -95,5 +118,17 @@ public class Builder {
 	
 	public static String getEmailPass() {
 		return ePass;
+	}
+	
+	public static String getEmailHost() {
+		return eHost;
+	}
+	
+	public static String getEmailPort() {
+		return ePort;
+	}
+	
+	public static int getTimeout() {
+		return timeout;
 	}
 }
