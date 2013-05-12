@@ -49,16 +49,20 @@ public class Builder {
 			/**
 			 * Writes user set data to config file.
 			 */
-			BufferedWriter out = new BufferedWriter(new FileWriter(curDir));
-			out.write("#DO NOT MODIFY THIS FILE.");
-			out.write("\r\neUser:" + getEmailUser());
-			out.write("\r\nePass:" + getEmailPass());
-			out.write("\r\neHost:" + getEmailHost());
-			out.write("\r\nePort:" + getEmailPort());
-			out.write("\r\ntimeout:" + getTimeout());
-			out.close();
-			
-			System.out.println(getEmailUser() + " | " + getEmailPass() + " | " + getEmailHost() + " | " + getEmailPort() + " | " + getTimeout());
+			if(curDir.exists()) {
+				BufferedWriter out = new BufferedWriter(new FileWriter(curDir));
+				out.write("#DO NOT MODIFY THIS FILE.");
+				out.write("\r\neUser:" + getEmailUser());
+				out.write("\r\nePass:" + getEmailPass());
+				out.write("\r\neHost:" + getEmailHost());
+				out.write("\r\nePort:" + getEmailPort());
+				out.write("\r\ntimeout:" + getTimeout());
+				out.close();
+				
+				System.out.println(getEmailUser() + " | " + getEmailPass() + " | " + getEmailHost() + " | " + getEmailPort() + " | " + getTimeout());
+			}else {
+				curDir.createNewFile();
+			}
 		}catch(Exception e) {
 			
 		}
@@ -86,7 +90,7 @@ public class Builder {
                 }
 				in.close();
 			}else {
-				
+				curDir.createNewFile();
 			}
 		}catch(Exception e) {
 			
