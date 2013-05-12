@@ -28,6 +28,7 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+import javax.swing.JCheckBox;
 
 /**
  * Main.java
@@ -103,17 +104,17 @@ public class Main extends JFrame {
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(tabbedPane, GroupLayout.PREFERRED_SIZE, 311, GroupLayout.PREFERRED_SIZE)
+					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
+					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
 					.addGroup(gl_contentPane.createSequentialGroup()
 						.addGap(1)
-						.addComponent(textArea, GroupLayout.PREFERRED_SIZE, 238, GroupLayout.PREFERRED_SIZE)))
+						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
 		);
 		
 		JPanel panel = new JPanel();
@@ -306,7 +307,7 @@ public class Main extends JFrame {
 		textField.setText(Builder.getEmailUser());
 		passwordField.setText(Builder.getEmailPass());
 		comboBox.setSelectedItem(String.valueOf(Builder.getEmailHost()));
-		spinner.setValue(Integer.parseInt(Builder.getEmailPort()));
+		//spinner.setValue(Integer.parseInt(Builder.getEmailPort()));
 		spinner_1.setValue((Integer)Builder.getTimeout());
 	}
 	
