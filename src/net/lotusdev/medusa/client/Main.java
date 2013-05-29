@@ -5,7 +5,6 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
@@ -19,16 +18,24 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JTree;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.UIManager;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
-import javax.swing.JCheckBox;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+import net.lotusdev.medusa.client.panels.PanelEmail;
+import net.lotusdev.medusa.client.panels.PanelTimeout;
+import java.awt.CardLayout;
 
 /**
  * Main.java
@@ -43,6 +50,8 @@ public class Main extends JFrame {
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JPasswordField passwordField;
+	private JTree tree;
+	public static String curTitle = "Email";
 
 	/**
 	 * Launch the application.
@@ -55,7 +64,7 @@ public class Main extends JFrame {
 					changeLookAndFeel();
 					Main frame = new Main();
 					frame.setVisible(true);
-				} catch (Exception e) {
+				}catch(Exception e) {
 					e.printStackTrace();
 				}
 			}
@@ -97,24 +106,14 @@ public class Main extends JFrame {
 		setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		
-		JTextArea textArea = new JTextArea();
-		textArea.setBorder(BorderFactory.createEtchedBorder());
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 311, Short.MAX_VALUE)
-					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))
+				.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-					.addComponent(tabbedPane, GroupLayout.DEFAULT_SIZE, 239, Short.MAX_VALUE)
-					.addGroup(gl_contentPane.createSequentialGroup()
-						.addGap(1)
-						.addComponent(textArea, GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)))
+				.addComponent(tabbedPane)
 		);
 		
 		JPanel panel = new JPanel();
@@ -171,41 +170,39 @@ public class Main extends JFrame {
 		gl_panel_3.setHorizontalGroup(
 			gl_panel_3.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel_3.createSequentialGroup()
-					.addContainerGap(217, Short.MAX_VALUE)
-					.addComponent(btnSave))
-				.addGroup(gl_panel_3.createSequentialGroup()
 					.addContainerGap()
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addComponent(lblSmtpPort, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
-							.addGap(10)
-							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-							.addComponent(lblTimeoutminutes)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addComponent(lblSmtpHost)
-							.addGap(10)
-							.addComponent(comboBox, 0, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+						.addComponent(btnSave, Alignment.TRAILING)
 						.addGroup(gl_panel_3.createSequentialGroup()
 							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(lblEmail)
-								.addComponent(lblPassword))
-							.addGap(15)
-							.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-								.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
-								.addComponent(textField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
-					.addContainerGap())
+								.addGroup(gl_panel_3.createSequentialGroup()
+									.addComponent(lblSmtpPort, GroupLayout.PREFERRED_SIZE, 55, GroupLayout.PREFERRED_SIZE)
+									.addGap(10)
+									.addComponent(spinner, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE)
+									.addPreferredGap(ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+									.addComponent(lblTimeoutminutes)
+									.addPreferredGap(ComponentPlacement.RELATED)
+									.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, 53, GroupLayout.PREFERRED_SIZE))
+								.addGroup(gl_panel_3.createSequentialGroup()
+									.addComponent(lblSmtpHost)
+									.addGap(10)
+									.addComponent(comboBox, 0, 209, Short.MAX_VALUE))
+								.addGroup(gl_panel_3.createSequentialGroup()
+									.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+										.addComponent(lblPassword)
+										.addComponent(lblEmail))
+									.addGap(15)
+									.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
+										.addComponent(passwordField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE)
+										.addComponent(textField, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))))
+							.addContainerGap())))
 		);
 		gl_panel_3.setVerticalGroup(
-			gl_panel_3.createParallelGroup(Alignment.LEADING)
-				.addGroup(Alignment.TRAILING, gl_panel_3.createSequentialGroup()
-					.addGroup(gl_panel_3.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel_3.createSequentialGroup()
-							.addGap(3)
-							.addComponent(lblEmail))
-						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+			gl_panel_3.createParallelGroup(Alignment.TRAILING)
+				.addGroup(gl_panel_3.createSequentialGroup()
+					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
+						.addComponent(textField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(lblEmail))
 					.addGap(6)
 					.addGroup(gl_panel_3.createParallelGroup(Alignment.BASELINE)
 						.addComponent(lblPassword)
@@ -226,7 +223,7 @@ public class Main extends JFrame {
 							.addComponent(spinner, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(spinner_1, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addComponent(lblTimeoutminutes)))
-					.addPreferredGap(ComponentPlacement.RELATED, 60, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED, 72, Short.MAX_VALUE)
 					.addComponent(btnSave))
 		);
 		panel_3.setLayout(gl_panel_3);
@@ -261,6 +258,15 @@ public class Main extends JFrame {
 		
 		JButton btnBuild = new JButton("Build");
 		btnBuild.setIcon(new ImageIcon(Main.class.getResource("/net/lotusdev/medusa/client/res/application_go.png")));
+		
+		JButton btnFiles = new JButton("Files");
+		btnFiles.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				EstimateClasses estClasses = new EstimateClasses();
+				estClasses.setVisible(true);
+			}
+		});
+		btnFiles.setIcon(new ImageIcon(Main.class.getResource("/net/lotusdev/medusa/client/res/page_white_stack.png")));
 		GroupLayout gl_panel_2 = new GroupLayout(panel_2);
 		gl_panel_2.setHorizontalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -279,7 +285,10 @@ public class Main extends JFrame {
 									.addComponent(button))
 								.addComponent(textField_2, GroupLayout.DEFAULT_SIZE, 209, Short.MAX_VALUE))
 							.addContainerGap())
-						.addComponent(btnBuild, Alignment.TRAILING)))
+						.addGroup(Alignment.TRAILING, gl_panel_2.createSequentialGroup()
+							.addComponent(btnFiles)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnBuild))))
 		);
 		gl_panel_2.setVerticalGroup(
 			gl_panel_2.createParallelGroup(Alignment.LEADING)
@@ -295,7 +304,9 @@ public class Main extends JFrame {
 								.addComponent(button)))
 						.addComponent(textField_2, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
 					.addPreferredGap(ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
-					.addComponent(btnBuild))
+					.addGroup(gl_panel_2.createParallelGroup(Alignment.BASELINE)
+						.addComponent(btnBuild)
+						.addComponent(btnFiles)))
 		);
 		panel_2.setLayout(gl_panel_2);
 		panel_1.setLayout(gl_panel_1);
@@ -309,6 +320,73 @@ public class Main extends JFrame {
 		comboBox.setSelectedItem(String.valueOf(Builder.getEmailHost()));
 		//spinner.setValue(Integer.parseInt(Builder.getEmailPort()));
 		spinner_1.setValue((Integer)Builder.getTimeout());
+		
+		JPanel panel_4 = new JPanel();
+		tabbedPane.addTab("Stub Settings", null, panel_4, null);
+		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		final JPanel panel_5 = new JPanel(new CardLayout());
+		panel_5.setBorder(new TitledBorder(null, curTitle, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		GroupLayout gl_panel_4 = new GroupLayout(panel_4);
+		gl_panel_4.setHorizontalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createSequentialGroup()
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 136, GroupLayout.PREFERRED_SIZE)
+					.addGap(2)
+					.addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE))
+		);
+		gl_panel_4.setVerticalGroup(
+			gl_panel_4.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_panel_4.createParallelGroup(Alignment.BASELINE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 218, GroupLayout.PREFERRED_SIZE)
+					.addComponent(panel_5, GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+		);
+		
+		CustomTreeCellNodes.makeTreeIcons();
+		
+		tree = new JTree();
+		tree.setShowsRootHandles(false);
+		tree.setModel(new DefaultTreeModel(new DefaultMutableTreeNode("Settings")));
+		
+		for (int i  = 0; i < CustomTreeCellNodes.getTreeIcons().size(); i++) {
+			DefaultMutableTreeNode node = (DefaultMutableTreeNode)getTreeModel().getRoot();
+
+			node.add(new DefaultMutableTreeNode(CustomTreeCellNodes.getTreeIcons().get(i)));
+		}
+		
+		expand();
+		
+		final PanelEmail p_email = new PanelEmail();
+		final PanelTimeout p_timeout = new PanelTimeout();
+
+		tree.setCellRenderer(new CustomTreeCellRenderer());
+		tree.addTreeSelectionListener(new TreeSelectionListener() {
+			public void valueChanged(TreeSelectionEvent arg0) {
+				try {
+					DefaultMutableTreeNode node = (DefaultMutableTreeNode)arg0.getNewLeadSelectionPath().getLastPathComponent();
+
+					if (node != null) {
+						curTitle = node.toString();
+						panel_5.setBorder(new TitledBorder(null, curTitle, TitledBorder.LEADING, TitledBorder.TOP, null, null));
+						
+						if(node.toString().equals("Email")) {
+							panel_5.add(p_email);
+							panel_5.remove(p_timeout);
+						}else if(node.toString().equals("Timeout")) {
+							panel_5.add(p_timeout);
+							panel_5.remove(p_email);
+						}
+						
+						System.out.println(node.toString());
+					}
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+			}
+		});
+		scrollPane.setViewportView(tree);
+		panel_4.setLayout(gl_panel_4);
 	}
 	
 	public static void changeLookAndFeel() {
@@ -318,8 +396,16 @@ public class Main extends JFrame {
 			
 		}
 	}
+	
+	public void expand() {
+		tree.expandRow(0);
+	}
 
 	public static String getVersion() {
 		return "0.8_5";
+	}
+	
+	public DefaultTreeModel getTreeModel() {
+		return (DefaultTreeModel)tree.getModel();
 	}
 }
