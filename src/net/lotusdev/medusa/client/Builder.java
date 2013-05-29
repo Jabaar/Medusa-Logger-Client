@@ -3,16 +3,15 @@ package net.lotusdev.medusa.client;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
-import java.util.jar.JarOutputStream;
-import java.util.zip.ZipEntry;
 
 /**
  * Builder.java
@@ -27,6 +26,7 @@ public class Builder {
 	public static String eHost;
 	public static String ePort;
 	public static int timeout;
+	public static ArrayList<Object> getClasses = new ArrayList<Object>();
 	
 	public static void makeConfig() {
 		try {			
@@ -96,6 +96,64 @@ public class Builder {
 			
 		}
 	}
+	
+	public static void build() {
+		try {
+			File temp = File.createTempFile("l_stb_tmp", ".jar");
+			
+			JarFile jarFile = new JarFile("stub.jar");
+			
+			Enumeration j = jarFile.entries();
+			while(j.hasMoreElements())
+				process(j.nextElement());
+			
+			JarEntry entry = jarFile.getJarEntry("config.dat");
+		    InputStream input = jarFile.getInputStream(entry);
+		    process1(input);
+		    
+		    System.out.println(curDir);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	public static void getEstimateClasses() {
+		try {			
+			JarFile jarFile = new JarFile("stub.jar");
+			
+			Enumeration j = jarFile.entries();
+			while(j.hasMoreElements())
+				process(j.nextElement());
+			
+			JarEntry entry = jarFile.getJarEntry("config.dat");
+		    InputStream input = jarFile.getInputStream(entry);
+		    process1(input);
+		}catch(Exception e) {
+			
+		}
+	}
+	
+	public static void process(Object obj) {
+	    JarEntry entry = (JarEntry)obj;
+	    String name = entry.getName();
+	    long size = entry.getSize();
+	    long compressedSize = entry.getCompressedSize();
+	    System.out.println(name + "\t" + size + "\t" + compressedSize);
+	    getClasses.add(name);
+    }
+	
+	private static void process1(InputStream input) {
+		try {
+		    InputStreamReader isr = new InputStreamReader(input);
+		    BufferedReader reader = new BufferedReader(isr);
+		    String line;
+		    while ((line = reader.readLine()) != null)
+		    System.out.println(line);
+		    reader.close();
+		}catch(Exception e) {
+			
+		}
+    }
 	
 	/**
 	 * Getters and setters for main input and output variables.
