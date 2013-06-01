@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
+import net.lotusdev.medusa.client.Util;
+
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	public static final ImageIcon EMAIL = Util.getIcon("page_white_text");
 	public static final ImageIcon INBOX = Util.getIcon("accept");
