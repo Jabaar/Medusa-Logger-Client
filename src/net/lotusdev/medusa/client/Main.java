@@ -1,5 +1,6 @@
 package net.lotusdev.medusa.client;
 
+import java.awt.CardLayout;
 import java.awt.EventQueue;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -33,11 +34,8 @@ import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
-import net.lotusdev.cryptex.gui.tree.CustomTreeCellNodes;
-import net.lotusdev.cryptex.gui.tree.CustomTreeCellRenderer;
 import net.lotusdev.medusa.client.panels.PanelEmail;
 import net.lotusdev.medusa.client.panels.PanelTimeout;
-import java.awt.CardLayout;
 
 /**
  * Main.java
